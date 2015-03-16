@@ -16,7 +16,7 @@ exports.mapa = function(req, res) {
 
 };
 
-exports.nuevoPto = function (req, res){
+exports.addMarker = function (req, res){
 
     Pto.findOne({nombre: req.body.nombre}, function(err, punto) {
         if ((punto !== null) && (punto !== undefined) && (punto !== '')){
