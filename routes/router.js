@@ -13,7 +13,4 @@ module.exports = function (app) {
 
     app.get('/puntos',utilities.allPoints);
 
-
-
-
 }

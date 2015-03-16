@@ -5,6 +5,7 @@ var mongoose = require('mongoose'),
     _ = require('underscore');
 
 var Pto = require('../models/puntos');
+var Comentario = require('../models/comentarios');
 
 /* Home View */
 exports.index = function(req, res) {
@@ -35,6 +36,32 @@ exports.allPoints = function (req, res){
     Pto.find({}, function(err, punto) {
         if ((punto !== null) && (punto !== undefined) && (punto !== '')){
             res.json(punto);
+        }
+        else {
+            res.send("Error");
+        }
+
+    });
+}
+
+
+
+
+
+exports.addComment = function (req, res){
+
+    var comentarioNuevo = new Comentario({nombre: req.body.nombre,comentario: req.body.comentario, idPoint: req.body.idPoint});
+    ptoNuevo.save();
+    res.send("200");
+
+}
+
+
+exports.allComments = function (req, res){
+
+    Comentario.find({}, function(err, comentario) {
+        if ((comentario !== null) && (comentario !== undefined) && (comentario !== '')){
+            res.json(comentario);
         }
         else {
             res.send("Error");
