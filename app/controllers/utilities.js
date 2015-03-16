@@ -28,3 +28,17 @@ exports.nuevoPto = function (req, res){
         }
     });
 }
+
+
+exports.allPoints = function (req, res){
+
+    Pto.find({}, function(err, punto) {
+        if ((punto !== null) && (punto !== undefined) && (punto !== '')){
+            res.json(punto);
+        }
+        else {
+            res.send("Error");
+        }
+
+    });
+}

@@ -11,5 +11,9 @@ module.exports = function (app) {
     app.post('/mapa',utilities.addMarker);
 
 
+    app.get('/puntos',utilities.allPoints);
+
+
+
 
 }
