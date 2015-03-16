@@ -4,19 +4,27 @@
 var mongoose = require('mongoose'),
     _ = require('underscore');
 
+var Pto = require('../models/puntos');
 
 /* Home View */
 exports.index = function(req, res) {
   res.render('home');
-  console.log(req.isAuthenticated());
 };
 
-/* Login View */
-exports.login = function(req, res) {
-    if(req.isAuthenticated()){
-        res.render('logout');
-    }
-    else{  res.render('login');}
+exports.mapa = function(req, res) {
+    res.render('mapa');
 
 };
 
+exports.nuevoPto = function (req, res){
+
+    Pto.findOne({nombre: req.body.nombre}, function(err, punto) {
+        if ((punto !== null) && (punto !== undefined) && (punto !== '')){
+            res.send("Error");
+        } else {
+            var ptoNuevo = new Pto({nombre: req.body.nombre,  geo: [req.body.lon, req.body.lat]});
+            ptoNuevo.save();
+            res.render(mapa);
+        }
+    });
+}
