@@ -1,0 +1,23 @@
+<% include _head.ejs %>
+<body ng-controller="SearchTrackingsCtrl">
+<div class="container">
+    <% include _navbar.ejs %>
+    <div class="jumbotron">
+        <!-- Button trigger modal -->
+        <center>
+            <form class="form-horizontal" action="/logout" method="post">
+                <!-- Button -->
+                <div class="control-group">
+                    <label class="control-label" for="confirmlogut"></label>
+
+                    <div class="controls">
+                        <button id="confirmlogut" name="confirmlogut" class="btn btn-danger">
+                            Log out
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </center>
+    </div>
+</div>
+</body>

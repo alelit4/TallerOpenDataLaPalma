@@ -1,0 +1,19 @@
+{
+  "name": "Demo Nodejs",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "node app"
+  },
+  "dependencies": {
+    "express": "*",
+    "mongoose": "*",
+    "jade": "*",
+    "node-gcm": "*",
+    "underscore": "*",
+    "request": "*",
+    "moment": "~2.4.0"
+  },
+    "description": "Nodejs",
+    "repository" : "GitHub"
+
+}

@@ -1,0 +1,50 @@
+<%include _head.ejs %>
+<body ng-controller="SignalsCtrl">
+    <div class="container">
+        <%include _navbar.ejs %>
+        <div class="jumbotron">
+            <h2>Todas las señales </h2>
+             <div class="span7">
+                 <div class="table-responsive">
+                    <div class="widget stacked widget-table action-table">
+                        <div class="widget-content">
+                            <table class="table table-striped table-bordered">
+                                <thead class="widget-header">
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Tipo</th>
+                                        <th>Valida</th>
+                                        <th>Geo</th>
+                                        <th>Sentido</th>
+                                        <th class="td-actions"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="signals">
+                                    <tr ng-repeat="signal in signals track by $index">
+                                        <td>{{signal._id}}</td>
+                                        <td><img class="signalico" src="{{printSignal(signal.idtiposignal)}}"></td>
+                                        <td>{{signal.valida}}</td>
+                                        <td>{{signal.geo}}</td>
+                                        <td>{{signal.sentido}}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-small" ng-click="deletesignal(signal)">
+                                                <span class="glyphicon glyphicon-remove"></span> Borrar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+
+</html>

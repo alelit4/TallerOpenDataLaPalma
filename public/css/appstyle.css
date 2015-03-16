@@ -1,0 +1,223 @@
+.table-bordered {
+	border: 1px solid #dddddd;
+	border-collapse: separate;
+	border-left: 0;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+
+.table {
+	width: 100%;
+	margin-bottom: 20px;
+	background-color: transparent;
+	border-collapse: collapse;
+	border-spacing: 0;
+	display: table;
+}
+
+.widget.widget-table .table {
+	margin-bottom: 0;
+	border: none;
+}
+
+.widget.widget-table .widget-content {
+	padding: 0;
+}
+
+.widget .widget-header + .widget-content {
+	border-top: none;
+	-webkit-border-top-left-radius: 0;
+	-webkit-border-top-right-radius: 0;
+	-moz-border-radius-topleft: 0;
+	-moz-border-radius-topright: 0;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+.widget .widget-content {
+	padding: 20px 15px 15px;
+	background: #FFF;
+	border: 1px solid #D5D5D5;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.widget .widget-header {
+	position: relative;
+	height: 40px;
+	line-height: 40px;
+	background: #E9E9E9;
+	background: -moz-linear-gradient(top, #fafafa 0%, #e9e9e9 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fafafa), color-stop(100%, #e9e9e9));
+	background: -webkit-linear-gradient(top, #fafafa 0%, #e9e9e9 100%);
+	background: -o-linear-gradient(top, #fafafa 0%, #e9e9e9 100%);
+	background: -ms-linear-gradient(top, #fafafa 0%, #e9e9e9 100%);
+	background: linear-gradient(top, #fafafa 0%, #e9e9e9 100%);
+	text-shadow: 0 1px 0 #fff;
+	border-radius: 5px 5px 0 0;
+	box-shadow: 0 2px 5px rgba(0,0,0,0.1),inset 0 1px 0 white,inset 0 -1px 0 rgba(255,255,255,0.7);
+	border-bottom: 1px solid #bababa;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA', endColorstr='#E9E9E9');
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA', endColorstr='#E9E9E9')";
+	border: 1px solid #D5D5D5;
+	-webkit-border-top-left-radius: 4px;
+	-webkit-border-top-right-radius: 4px;
+	-moz-border-radius-topleft: 4px;
+	-moz-border-radius-topright: 4px;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	-webkit-background-clip: padding-box;
+}
+
+thead {
+	display: table-header-group;
+	vertical-align: middle;
+	border-color: inherit;
+}
+
+.widget .widget-header h3 {
+	top: 2px;
+	position: relative;
+	left: 10px;
+	display: inline-block;
+	margin-right: 3em;
+	font-size: 6px;
+	font-weight: 60px;
+	color: #555;
+	line-height: 18px;
+	text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+.widget .widget-header [class^="icon-"], .widget .widget-header [class*=" icon-"] {
+	display: inline-block;
+	margin-left: 13px;
+	margin-right: -2px;
+	font-size: 16px;
+	color: #555;
+	vertical-align: middle;
+}
+
+.trackings {
+	font-size: 20px;
+}
+/*  Map  */
+/* Flexible */
+
+.responsive-map {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 30px;
+    overflow: hidden;
+}
+
+#map{
+	display: block;
+	width: 100%; 
+	height: 80%;
+}
+
+/*.responsive-map embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}*/
+
+/* Search view*/
+#searchtracking{
+	margin-bottom: 10px;
+}
+
+/* Map view */
+#open2, #open1 {
+	padding: 12px 9px 10px 10px;
+}
+
+.input-group-btn {
+	padding: 2px 2px 2px 2px;
+    font-size: inherit;
+
+}
+
+.input-group-btn input {
+    width: 80%;
+    height: 100%;
+	padding: 1px 2px 3px 2px;
+    font-size: inherit;
+
+}
+
+
+/* Home video */
+#video_background { 
+    position: absolute;
+    bottom: 0px; 
+    right: 0px; 
+    min-width: 100%; 
+    min-height: 100%; 
+    width: auto; 
+    height: auto; 
+    z-index: -1000; 
+    overflow: hidden
+}
+
+#video_pattern { 
+    background-image: url(../images/demo1.png);
+    position: fixed; 
+    opacity: 0.8; 
+    left: 0px; 
+    top: 0px; 
+    width: 100%; 
+    height: 100%;
+    z-index: 1
+}
+
+/* Home Style */
+
+
+.containerhome {
+    width: 26%;
+    height: 26%;
+}
+
+/* resize images */
+.containerhome img {
+	padding-top: 20%;
+    width: 100%;
+}
+
+#submit{
+	margin-top: 6%;
+ 	width: 100%;
+}
+
+ /*resize images */
+.containerhome button {
+    width: 100%;
+
+}
+
+.footer {
+   margin-left: 40%;
+   position: absolute;
+   bottom:0;
+
+}
+
+.footer p{
+	color: #CFDAD8;
+}
+
+/* Para los iconos de signals*/
+.signalico {
+    width: 30px;
+    height: 20px;
+}
+
+/*Para la selección de los parámetros de búsqueda (Trackings)*/
+#invisible{
+    color: #ccc;
+}
