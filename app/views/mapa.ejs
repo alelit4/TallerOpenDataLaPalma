@@ -1,58 +1,18 @@
 <% include _head.ejs %>
-<script type="text/javascript"
-        src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAQVxSC67O_15Ru0EJuStLkXktrII0NlyU&sensor=True">
-</script>
-<script type="text/javascript">
-    function initialize() {
-        var mapOptions = {
-            zoom: 8,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        var map = new google.maps.Map(document.getElementById("map_canvas"),
-                mapOptions);
-        // Try HTML5 geolocation
-        if(navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                var pos = new google.maps.LatLng(position.coords.latitude,
-                        position.coords.longitude);
-
-                var infowindow = new google.maps.InfoWindow({
-                    map: map,
-                    position: pos,
-                    content: 'Location found using HTML5.'
-                });
-
-                map.setCenter(pos);
-            }, function() {
-                handleNoGeolocation(true);
-            });
-        } else {
-            // Browser doesn't support Geolocation
-            handleNoGeolocation(false);
-        }
-    }
-</script>
-
-<body ng-controller="HomeCtrl" onload="initialize()">
+<body ng-controller="MapCtrl">
 <div class="container">
-    <% include _navbar.ejs %>
-<div id="map_canvas" style="width:100%; height:80%"></div>
+    <%include _navbar.ejs %>
+    <div class="jumbotron">
+        <div class="row">
+            <div class="responsive-map col-md-12">
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
+    <!-- Site footer -->
     <div class="footer">
-        <p> Shorcial Team, 2015 </p>
+        <p>© CryptUll 2014</p>
     </div>
 </div>
 </body>
-
-
-
-
-
-
-
-
-
-
-
-
-
 </html>

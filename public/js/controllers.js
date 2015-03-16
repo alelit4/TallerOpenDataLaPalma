@@ -1,59 +1,86 @@
-var dephisitApp = angular.module('dephisitApp', ['ngResource']);
+var demoApp = angular.module('demoApp', ['ngResource']);
 
-dephisitApp.controller('SignalsCtrl', function ($scope, $http, $window, $location) {
+/* All Trackings Map Controller */
+demoApp.controller('MapCtrl', function ($scope, $resource, $http, $window, $location) {
 
+    /* Init the map */
+    $scope.map = new GMaps({
+        el: '#map',
+        lat: 28.300,
+        lng: -16.612,
+        zoom: 10
+    });
+
+    $scope.pos;
+    var centrarMapa = function () {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                $scope.pos = new google.maps.LatLng(position.coords.latitude,
+                    position.coords.longitude);
+                $scope.map.setCenter($scope.pos);
+            }, function () {
+                handleNoGeolocation(true);
+            });
+        } else {
+            // Browser doesn't support Geolocation
+            handleNoGeolocation(false);
+        }
+    };
+
+    centrarMapa();
+
+
+    /* To get all trackings with a GET method */
     var updateData = function () {
+        // Accessing the Angular $http Service to send data via REST Communication to Node Server.
         $http({
             method: 'GET',
-            url: '/getallsignals',
+            url: '/getalltrackings',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        }).success(function (response) {
-                $scope.codeStatus = response;
-                $scope.signals = response;
-                console.log(response);
-            }).error(function (response) {  // Getting Error Response in Callback
-                console.log("error");
-                $scope.codeStatus = response || "Request failed";
-                console.log($scope.codeStatus);
-            });
+        }).success(function (data, status, headers, config) {
+            $scope.codeStatus = data;
+            $scope.trackings = data;
+            for (var i = 0; i < $scope.trackings.length; i++) {
+                console.log('Soy el tracking ' + $scope.trackings[i].idvehiculo);
+                $scope.map.addMarker({
+                    lat: $scope.trackings[i].geo[1],
+                    lng: $scope.trackings[i].geo[0],
+                    title: $scope.trackings[i].idvehiculo,
+                    details: {
+                        sentido: $scope.trackings[i].sentido,
+                        author: 'Dephisit'
+                    },
+                    icon: "/images/point.png",
+                    infoWindow: {
+                        content: '<p>Soy vehiculo ' + $scope.trackings[i].idvehiculo + '</p>'
+                    }
+                });
+            }
+        }).error(function (data, status, headers, config) {
+            console.log("error"); // Getting Error Response in Callback
+            $scope.codeStatus = response || "Request failed";
+            console.log($scope.codeStatus);
+        });
     };
+
 
     /* To refresh data */
     var timer = setInterval(function () {
         $scope.$apply(updateData);
-    }, 1000);
+    }, 10000);
 
-    updateData();
-
-    // Demo onClick in angular
-    $scope.deletesignal = function (signal) {
-        console.log(signal._id);
-        $http({
-            method: 'POST',
-            url: '/deletesignal/' + signal._id,
-            headers: {'Content-Type': 'application/json'}
-        }).success(function (response) {
-                $scope.codeStatus = response;
-                console.log(response);
-                updateData();
-            }).error(function (response) {  // Getting Error Response in Callback
-                console.log("error");
-                $scope.codeStatus = response || "Request failed";
-                console.log($scope.codeStatus);
-            });
-    };
-
-    $scope.printSignal = function(tipo){
-        if(tipo === "CRUCE"){
-            return  "/images/cross.ico";
-        }else if(tipo === "STOP"){
-            return  "/images/stop.ico";
-        }else if(tipo == "CEDA"){
-            return  "/images/yield.ico";
-        }
-        return  "/images/punto.ico";
-
-    };
+    /* The first call to get all trackings */
+   // updateData();
+   //
+   // /* To add a marker to our map */
+   // $scope.map.addMarker({
+   //     lat: 28.300,
+   //     lng: -16.612,
+   //     title: 'Marker with InfoWindow',
+   //     infoWindow: {
+   //         content: '<p>HTML Content</p>'
+   //     }
+   // });
 
     $scope.isActive = function (route) {
 
@@ -63,22 +90,4 @@ dephisitApp.controller('SignalsCtrl', function ($scope, $http, $window, $locatio
         //console.log(route === $location.path().toString);
         return route === path[path.length - 1];
     }
-
-
-});
-
-
-dephisitApp.controller('HomeCtrl', function ($scope, $http, $window, $location) {
-
-
-    $scope.isActive = function (route) {
-
-        var path = $location.absUrl().split("/");
-        console.log(route === path[path.length - 1]);
-        //console.log($location.absUrl());
-        //console.log(route === $location.path().toString);
-        return route === path[path.length - 1];
-    }
-
-
 });
