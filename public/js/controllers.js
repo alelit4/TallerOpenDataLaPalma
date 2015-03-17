@@ -6,28 +6,28 @@ demoApp.controller('MapCtrl', function ($scope, $resource, $http, $window, $loca
     /* Init the map */
     $scope.map = new GMaps({
         el: '#map',
-        lat: 28.300,
-        lng: -16.612,
+        lat: 28.712428,
+        lng: -17.859723,
         zoom: 10
     });
 
-    $scope.pos;
-    var centrarMapa = function () {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                $scope.pos = new google.maps.LatLng(position.coords.latitude,
-                    position.coords.longitude);
-                $scope.map.setCenter($scope.pos);
-            }, function () {
-                handleNoGeolocation(true);
-            });
-        } else {
-            // Browser doesn't support Geolocation
-            handleNoGeolocation(false);
-        }
-    };
-
-    centrarMapa();
+    //$scope.pos;
+    //var centrarMapa = function () {
+    //    if (navigator.geolocation) {
+    //        navigator.geolocation.getCurrentPosition(function (position) {
+    //            $scope.pos = new google.maps.LatLng(position.coords.latitude,
+    //                position.coords.longitude);
+    //            $scope.map.setCenter($scope.pos);
+    //        }, function () {
+    //            handleNoGeolocation(true);
+    //        });
+    //    } else {
+    //        // Browser doesn't support Geolocation
+    //        handleNoGeolocation(false);
+    //    }
+    //};
+    //
+    //centrarMapa();
 
 
     /* To get all trackings with a GET method */
@@ -35,24 +35,22 @@ demoApp.controller('MapCtrl', function ($scope, $resource, $http, $window, $loca
         // Accessing the Angular $http Service to send data via REST Communication to Node Server.
         $http({
             method: 'GET',
-            url: '/getalltrackings',
+            url: '/puntos',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function (data, status, headers, config) {
             $scope.codeStatus = data;
-            $scope.trackings = data;
-            for (var i = 0; i < $scope.trackings.length; i++) {
-                console.log('Soy el tracking ' + $scope.trackings[i].idvehiculo);
+            console.log('--->' + data);
+            $scope.puntos = data;
+            for (var i = 0; i < $scope.puntos.length; i++) {
+                console.log('Soy el punto ' + $scope.puntos[i].nombre);
+                console.log('Soy el lon ' + $scope.puntos[i]);
                 $scope.map.addMarker({
-                    lat: $scope.trackings[i].geo[1],
-                    lng: $scope.trackings[i].geo[0],
-                    title: $scope.trackings[i].idvehiculo,
-                    details: {
-                        sentido: $scope.trackings[i].sentido,
-                        author: 'Dephisit'
-                    },
-                    icon: "/images/point.png",
+                    lat: $scope.puntos[i].geo[0],
+                    lng: $scope.puntos[i].geo[1],
+                    title: $scope.puntos[i].nombre,
+                    icon: "/images/punto.png",
                     infoWindow: {
-                        content: '<p>Soy vehiculo ' + $scope.trackings[i].idvehiculo + '</p>'
+                        content: '<p>Soy Punto ' + $scope.puntos[i].nombre + '</p>'
                     }
                 });
             }
@@ -65,14 +63,14 @@ demoApp.controller('MapCtrl', function ($scope, $resource, $http, $window, $loca
 
 
     /* To refresh data */
-    var timer = setInterval(function () {
-        $scope.$apply(updateData);
-    }, 10000);
+    //var timer = setInterval(function () {
+    //    $scope.$apply(updateData);
+    //}, 10000);
 
     /* The first call to get all trackings */
-   // updateData();
-   //
-   // /* To add a marker to our map */
+   updateData();
+
+   /* To add a marker to our map */
    // $scope.map.addMarker({
    //     lat: 28.300,
    //     lng: -16.612,

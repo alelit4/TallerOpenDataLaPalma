@@ -18,14 +18,14 @@ exports.mapa = function(req, res) {
 };
 
 exports.addMarker = function (req, res){
-
     Pto.findOne({nombre: req.body.nombre}, function(err, punto) {
         if ((punto !== null) && (punto !== undefined) && (punto !== '')){
             res.send("Error");
         } else {
             var ptoNuevo = new Pto({nombre: req.body.nombre,  geo: [req.body.lon, req.body.lat]});
             ptoNuevo.save();
-            res.render(mapa);
+            res.send(ptoNuevo.id);
+
         }
     });
 }

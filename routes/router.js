@@ -5,12 +5,12 @@ module.exports = function (app) {
     /* Home Page */
     app.get('/', utilities.index);
 
-    // Signals
+    // Mapa
     app.get('/mapa', utilities.mapa);
+//    app.post('/mapa',utilities.addMarker);
 
-    app.post('/mapa',utilities.addMarker);
-
-
+    // Puntos
+    app.post('/punto',utilities.addMarker);
     app.get('/puntos',utilities.allPoints);
 
 }
