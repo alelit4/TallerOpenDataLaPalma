@@ -1,18 +1,41 @@
-<% include _head.ejs %>
-<body ng-controller="MapCtrl">
-<div class="container">
-    <%include _navbar.ejs %>
-    <div class="jumbotron">
-        <div class="row">
-            <div class="responsive-map col-md-12">
-                <div id="map"></div>
+<html ng-app="demoApp">
+    <% include _head.ejs %>
+    <body ng-controller="MapCtrl">
+        <div class="container">
+            <%include _navbar.ejs %>
+            <div class="jumbotron">
+                <div class="row">
+                    <div class="responsive-map col-md-6">
+                        <div id="map"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <h1>Comentarios</h1>
+                        <!--<li ng-repeat="punto in puntos">-->
+                            <!--<span>{{punto.nombre}}</span>-->
+                        <!--</li>-->
+                        <div class="form-group">
+                            Seleccione un Lugar:
+                            <select id="selectBox" ng-model="punto.nombre" class="form-control"  ng-change="changeFunc(0)">
+                                <option value=""disabled selected>Seleccione un lugar</option>
+                                <option ng-repeat="punto in puntos" value={{punto._id}}>{{punto.nombre}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            Nombre <input ng-model="currentComentarioNombre" type="text" class="form-control" placeholder="Introduzca un nombre" required="required">
+                            Comentario <input ng-model="currentComentarioComentario" type="text" class="form-control" placeholder="Introduzca un comentario" required="required">
+                        </div>
+                        <button type="submit" ng-click="send()" class="btn btn-success">Submit</button>
+                        <li ng-repeat="comentario in comentarios">
+                            <h2><span>{{comentario.nombre}}</span></h2>
+                            <p>{{comentario.comentario}}</p>
+                        </li>
+                    </div>
+                </div>
+            </div>
+            <!-- Site footer -->
+            <div class="footer">
+                <p>© CryptUll 2014</p>
             </div>
         </div>
-    </div>
-    <!-- Site footer -->
-    <div class="footer">
-        <p>© CryptUll 2014</p>
-    </div>
-</div>
-</body>
+    </body>
 </html>

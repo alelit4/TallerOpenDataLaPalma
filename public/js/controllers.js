@@ -1,9 +1,16 @@
 var demoApp = angular.module('demoApp', ['ngResource']);
 
-/* All Trackings Map Controller */
+/* Controlador de la vista del Mapa */
 demoApp.controller('MapCtrl', function ($scope, $resource, $http, $window, $location) {
 
-    /* Init the map */
+    /* Inicialización */
+    $scope.currentComentarioNombre = "";
+    $scope.currentComentarioIdPoint = "";
+    $scope.currentComentarioLugar = "";
+    $scope.currentComentarioComentario = "";
+    $scope.comentarios;
+
+    /* Inicialización del Mapa */
     $scope.map = new GMaps({
         el: '#map',
         lat: 28.712428,
@@ -11,26 +18,8 @@ demoApp.controller('MapCtrl', function ($scope, $resource, $http, $window, $loca
         zoom: 10
     });
 
-    //$scope.pos;
-    //var centrarMapa = function () {
-    //    if (navigator.geolocation) {
-    //        navigator.geolocation.getCurrentPosition(function (position) {
-    //            $scope.pos = new google.maps.LatLng(position.coords.latitude,
-    //                position.coords.longitude);
-    //            $scope.map.setCenter($scope.pos);
-    //        }, function () {
-    //            handleNoGeolocation(true);
-    //        });
-    //    } else {
-    //        // Browser doesn't support Geolocation
-    //        handleNoGeolocation(false);
-    //    }
-    //};
-    //
-    //centrarMapa();
 
-
-    /* To get all trackings with a GET method */
+    /* Función para pedir todos los puntos para marcar en el mapa */
     var updateData = function () {
         // Accessing the Angular $http Service to send data via REST Communication to Node Server.
         $http({
@@ -43,14 +32,13 @@ demoApp.controller('MapCtrl', function ($scope, $resource, $http, $window, $loca
             $scope.puntos = data;
             for (var i = 0; i < $scope.puntos.length; i++) {
                 console.log('Soy el punto ' + $scope.puntos[i].nombre);
-                console.log('Soy el lon ' + $scope.puntos[i]);
-                $scope.map.addMarker({
+                var marker = $scope.map.addMarker({
                     lat: $scope.puntos[i].geo[0],
                     lng: $scope.puntos[i].geo[1],
-                    title: $scope.puntos[i].nombre,
+                    title: $scope.puntos[i]._id,
                     icon: "/images/punto.png",
                     infoWindow: {
-                        content: '<p>Soy Punto ' + $scope.puntos[i].nombre + '</p>'
+                        content: '<p>Soy ' + $scope.puntos[i].nombre + '</p>'
                     }
                 });
             }
@@ -67,10 +55,8 @@ demoApp.controller('MapCtrl', function ($scope, $resource, $http, $window, $loca
     //    $scope.$apply(updateData);
     //}, 10000);
 
-    /* The first call to get all trackings */
-   updateData();
 
-   /* To add a marker to our map */
+    /* To add a marker to our map */
    // $scope.map.addMarker({
    //     lat: 28.300,
    //     lng: -16.612,
@@ -80,12 +66,61 @@ demoApp.controller('MapCtrl', function ($scope, $resource, $http, $window, $loca
    //     }
    // });
 
-    $scope.isActive = function (route) {
+    /* Petición para generar un nuevo comentario */
+    $scope.send = function () {
+        $http({ // Accessing the Angular $http Service to send data via REST Communication to Node Server.
+            method: 'POST',
+            url: '/comentario',
+            headers: {'Content-Type': 'application/json'},
+            data:  {
+                "nombre": $scope.currentComentarioNombre,
+                "comentario": $scope.currentComentarioComentario,
+                "idPoint": $scope.currentComentarioIdPoint
+            }
+        }).success(function (response) {
+            console.log('ok' + response);
+            $scope.success = true;
+            updateComments();
+        }).error(function (response) {
+            console.log("error"); // Getting Error Response in Callback
+        });
+    };
 
-        var path = $location.absUrl().split("/");
-        console.log(route === path[path.length - 1]);
-        //console.log($location.absUrl());
-        //console.log(route === $location.path().toString);
-        return route === path[path.length - 1];
-    }
+
+    /* Petición para obtener todos los comentarios de un lugar */
+    var updateComments = function () {
+        // Accessing the Angular $http Service to send data via REST Communication to Node Server.
+        $http({
+            method: 'GET',
+            url: '/comentario/' + $scope.currentComentarioIdPoint,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).success(function (data, status, headers, config) {
+            $scope.codeStatus = data;
+            $scope.comentarios = data;
+
+        }).error(function (data, status, headers, config) {
+            console.log("error"); // Getting Error Response in Callback
+            $scope.codeStatus = data || "Request failed";
+            console.log($scope.codeStatus);
+        });
+    };
+
+    /* Para saber que lugar elegimos del SelectBox */
+    $scope.changeFunc = function (opt) {
+        var selectBox = document.getElementById("selectBox");
+        var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+        if (opt === 0) {
+            $scope.currentComentarioIdPoint = selectedValue;
+        }
+        updateComments();
+    };
+
+
+    /* La primera llamada para sacar los puntos de interés */
+    updateData();
+
+});
+
+demoApp.controller('HomeCtrl', function ($scope, $resource, $http, $window, $location) {
+
 });

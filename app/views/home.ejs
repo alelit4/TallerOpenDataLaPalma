@@ -1,47 +1,16 @@
-<% include _head.ejs %>
-<body ng-controller="HomeCtrl">
-
-<div class="container">
-    <% include _navbar.ejs %>
-    <div class="container containerhome" id="home">
-        <div class="row">
-
-            <img id="logohome" src="images/logo.png">
-            <video id="video_background" preload="auto" loop="loop" muted="muted" volume="0">
-                <source src="videos/background.webm" type="video/webm">
-                <!-- <source src="videos/minivideo2.mp4" type="video/mp4"> -->
-                Video not supported
-            </video>
-        </div>
-         <!--<div class="row">
-            <div class="col-md-10 col-md-offset-1">
-            <form role="form" action="/search">
-              <div class="form-group">
-                <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Usuario" required>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Contraseña" required>
-                 <button type="submit" id="submit" class="btn btn-success">Entrar</button>
-              </div>
-            </form>
+<html ng-app="demoApp">
+    <% include _head.ejs %>
+    <body ng-controller="HomeCtrl" class="containerhome">
+        <div class="container">
+            <% include _navbar.ejs %>
+            <div class="row">
+                <div class="centered">
+                    <img id="logohome" src="images/logo.png">
+                </div>
             </div>
-        </div>-->
-
-        <!-- Site footer -->
-
-    </div>
-    <div class="footer">
-        <p> Proyecto Fin de Máster Alexandra Rivero©, 2014 </p>
-    </div>
-</div>
-<script type="text/javascript">
-    window.onload = function () {
-        // document.getElementById("video_background").defaultPlaybackRate = 1;
-        document.getElementById("video_background").play();
-        /* now play three times as fast just for the heck of it */
-        document.getElementById("video_background").playbackRate = 0.5;
-    };
-</script>
-
+            <div class="footer">
+                <p> Taller OPENDATALAPALMA, 2015 </p>
+            </div>
+        </div>
 </body>
-
-
 </html>
