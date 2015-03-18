@@ -10,6 +10,9 @@ var express = require('express'),
 var flash 	 = require('connect-flash');
 var passport = require('passport');
 
+var Pto = require('./app/models/puntos');
+var BBDD = require('./app/controllers/utilities');
+
 
 var app = express();
 
@@ -72,4 +75,33 @@ mongoose.connect('mongodb://localhost/demo_db');
 //Start the server  
 http.createServer(app).listen(3000);
 
-console.log("Lanzado en puerto 3000...")
+console.log("Lanzado en puerto 3000...");
+
+function loadData(urlParam){
+  var url = urlParam;
+  if (url === null){
+    url = "http://www.opendatalapalma.es/datasets/b01599127c534a3ea4a29b9febae3389_0.geojson";
+  }
+
+  request({
+      url: url,
+      json: true
+  }, function (error, response, body) {
+      if (!error && response.statusCode === 200) {
+          // JSON is 'body'
+          var farmacias = body.features;
+
+          for (var i=0; i<farmacias.length; i++){
+            BBDD.addPoint(farmacias[i].properties.Titular, // nombre
+                          farmacias[i].geometry.coordinates[0], // latitud
+                          farmacias[i].geometry.coordinates[1]); // longitud
+          }
+          console.log("Open Data Loaded!");
+      }
+  });
+}
+
+loadData(null);
+
+
+

@@ -70,3 +70,15 @@ exports.allComments = function (req, res){
         }
     });
 }
+
+exports.addPoint = function (nombre, latitud, longitud){
+    Pto.findOne({nombre: nombre}, function(err, punto) {
+        if ((punto !== null) && (punto !== undefined) && (punto !== '')){
+            console.log("Ya existe la Farmacia: "+nombre+"en BBDD");
+        } else {
+            var ptoNuevo = new Pto({nombre: nombre,  geo: [parseFloat(longitud), parseFloat(latitud)]});
+            ptoNuevo.save();
+            console.log("Farmacia: "+nombre+" insertada en BBDD!");
+        }
+    });
+}
